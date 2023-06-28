@@ -1,0 +1,10 @@
+{
+	"name": "AzureKeyVault56",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/93fe3ebc-1ad5-430f-ad5d-4f0aa90a8360/resourceGroups/ayjharesourcegroup1/providers/Microsoft.KeyVault/vaults/keyvault-jha",
+		"groupId": "vault",
+		"fqdns": [
+			"keyvault-jha.vault.azure.net"
+		]
+	}
+}

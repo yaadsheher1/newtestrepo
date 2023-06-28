@@ -1,0 +1,17 @@
+{
+	"name": "Trigger_npo",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 3,
+				"startTime": "2021-12-17T09:37:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

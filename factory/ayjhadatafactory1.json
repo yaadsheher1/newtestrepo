@@ -1,0 +1,9 @@
+{
+	"name": "ayjhadatafactory1",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "73d09ef8-a0c4-4fd9-8dff-3f4d0dcfc15f",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}

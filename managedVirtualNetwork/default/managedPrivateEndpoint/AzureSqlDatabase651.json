@@ -1,0 +1,10 @@
+{
+	"name": "AzureSqlDatabase651",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/93fe3ebc-1ad5-430f-ad5d-4f0aa90a8360/resourceGroups/ayjharesourcegroup1/providers/Microsoft.Sql/servers/ayjhasqlserver1",
+		"groupId": "sqlServer",
+		"fqdns": [
+			"ayjhasqlserver1.database.windows.net"
+		]
+	}
+}

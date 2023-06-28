@@ -1,0 +1,39 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "gingerlinkedsql",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "uuid",
+				"type": "varchar"
+			},
+			{
+				"name": "name",
+				"type": "varchar"
+			},
+			{
+				"name": "qr_code",
+				"type": "varchar"
+			},
+			{
+				"name": "vehicle_registered",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "vehicle_imei",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "TestAPIVehicles2"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

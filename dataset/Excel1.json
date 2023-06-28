@@ -1,0 +1,22 @@
+{
+	"name": "Excel1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "linkedservice_ayjha",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Detail_Subscription_8513e7d1-88",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "ADF Spike.xlsx",
+				"container": "containerayjha"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
