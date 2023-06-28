@@ -1,0 +1,82 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ayjhadatafactory1"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"value": ""
+		},
+		"AzureMySql1_connectionString": {
+			"value": ""
+		},
+		"OData1_password": {
+			"value": ""
+		},
+		"RestService1_password": {
+			"value": ""
+		},
+		"gingerlinkedsql_connectionString": {
+			"value": ""
+		},
+		"linkedservice_ayjha_connectionString": {
+			"value": ""
+		},
+		"testAzureSqlDatabase1_connectionString": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://cs1100320013877297e.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://cs1100320013877297e.dfs.core.windows.net/"
+		},
+		"OData1_properties_typeProperties_url": {
+			"value": "https://services.odata.org/OData/OData.svc"
+		},
+		"OData1_properties_typeProperties_userName": {
+			"value": "Username"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"value": "https://eu-data.joyridecity.bike/api/v1/ginger/vehicles"
+		},
+		"RestService1_properties_typeProperties_userName": {
+			"value": "yaadsheher"
+		},
+		"testkeyvault_properties_typeProperties_baseUrl": {
+			"value": "https://ajhakeyvault.vault.azure.net/"
+		},
+		"AzureKeyVault56_properties_privateLinkResourceId": {
+			"value": "/subscriptions/93fe3ebc-1ad5-430f-ad5d-4f0aa90a8360/resourceGroups/ayjharesourcegroup1/providers/Microsoft.KeyVault/vaults/keyvault-jha"
+		},
+		"AzureKeyVault56_properties_groupId": {
+			"value": "vault"
+		},
+		"AzureKeyVault56_properties_fqdns": {
+			"value": [
+				"keyvault-jha.vault.azure.net"
+			]
+		},
+		"AzureSqlDatabase651_properties_privateLinkResourceId": {
+			"value": "/subscriptions/93fe3ebc-1ad5-430f-ad5d-4f0aa90a8360/resourceGroups/ayjharesourcegroup1/providers/Microsoft.Sql/servers/ayjhasqlserver1"
+		},
+		"AzureSqlDatabase651_properties_groupId": {
+			"value": "sqlServer"
+		},
+		"AzureSqlDatabase651_properties_fqdns": {
+			"value": [
+				"ayjhasqlserver1.database.windows.net"
+			]
+		}
+	}
+}

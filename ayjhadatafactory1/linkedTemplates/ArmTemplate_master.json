@@ -1,0 +1,227 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ayjhadatafactory1"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureBlobStorage2_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage1'"
+		},
+		"AzureDataLakeStorage2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2'"
+		},
+		"AzureMySql1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureMySql1'"
+		},
+		"OData1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'OData1'"
+		},
+		"RestService1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'RestService1'"
+		},
+		"gingerlinkedsql_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'gingerlinkedsql'"
+		},
+		"linkedservice_ayjha_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'linkedservice_ayjha'"
+		},
+		"testAzureSqlDatabase1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'testAzureSqlDatabase1'"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://cs1100320013877297e.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://cs1100320013877297e.dfs.core.windows.net/"
+		},
+		"OData1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://services.odata.org/OData/OData.svc"
+		},
+		"OData1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Username"
+		},
+		"RestService1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://eu-data.joyridecity.bike/api/v1/ginger/vehicles"
+		},
+		"RestService1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "yaadsheher"
+		},
+		"testkeyvault_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://ajhakeyvault.vault.azure.net/"
+		},
+		"AzureKeyVault56_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/93fe3ebc-1ad5-430f-ad5d-4f0aa90a8360/resourceGroups/ayjharesourcegroup1/providers/Microsoft.KeyVault/vaults/keyvault-jha"
+		},
+		"AzureKeyVault56_properties_groupId": {
+			"type": "string",
+			"defaultValue": "vault"
+		},
+		"AzureKeyVault56_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"keyvault-jha.vault.azure.net"
+			]
+		},
+		"AzureSqlDatabase651_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/93fe3ebc-1ad5-430f-ad5d-4f0aa90a8360/resourceGroups/ayjharesourcegroup1/providers/Microsoft.Sql/servers/ayjhasqlserver1"
+		},
+		"AzureSqlDatabase651_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"AzureSqlDatabase651_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"ayjhasqlserver1.database.windows.net"
+			]
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ayjhadatafactory1_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureBlobStorage1_connectionString": {
+						"value": "[parameters('AzureBlobStorage1_connectionString')]"
+					},
+					"AzureBlobStorage2_connectionString": {
+						"value": "[parameters('AzureBlobStorage2_connectionString')]"
+					},
+					"AzureDataLakeStorage1_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
+					},
+					"AzureDataLakeStorage2_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					},
+					"OData1_password": {
+						"value": "[parameters('OData1_password')]"
+					},
+					"RestService1_password": {
+						"value": "[parameters('RestService1_password')]"
+					},
+					"gingerlinkedsql_connectionString": {
+						"value": "[parameters('gingerlinkedsql_connectionString')]"
+					},
+					"linkedservice_ayjha_connectionString": {
+						"value": "[parameters('linkedservice_ayjha_connectionString')]"
+					},
+					"AzureDataLakeStorage1_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"AzureDataLakeStorage2_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage2_properties_typeProperties_url')]"
+					},
+					"OData1_properties_typeProperties_url": {
+						"value": "[parameters('OData1_properties_typeProperties_url')]"
+					},
+					"OData1_properties_typeProperties_userName": {
+						"value": "[parameters('OData1_properties_typeProperties_userName')]"
+					},
+					"RestService1_properties_typeProperties_url": {
+						"value": "[parameters('RestService1_properties_typeProperties_url')]"
+					},
+					"RestService1_properties_typeProperties_userName": {
+						"value": "[parameters('RestService1_properties_typeProperties_userName')]"
+					},
+					"testkeyvault_properties_typeProperties_baseUrl": {
+						"value": "[parameters('testkeyvault_properties_typeProperties_baseUrl')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "ayjhadatafactory1_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureMySql1_connectionString": {
+						"value": "[parameters('AzureMySql1_connectionString')]"
+					},
+					"testAzureSqlDatabase1_connectionString": {
+						"value": "[parameters('testAzureSqlDatabase1_connectionString')]"
+					},
+					"AzureKeyVault56_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureKeyVault56_properties_privateLinkResourceId')]"
+					},
+					"AzureKeyVault56_properties_groupId": {
+						"value": "[parameters('AzureKeyVault56_properties_groupId')]"
+					},
+					"AzureKeyVault56_properties_fqdns": {
+						"value": "[parameters('AzureKeyVault56_properties_fqdns')]"
+					},
+					"AzureSqlDatabase651_properties_privateLinkResourceId": {
+						"value": "[parameters('AzureSqlDatabase651_properties_privateLinkResourceId')]"
+					},
+					"AzureSqlDatabase651_properties_groupId": {
+						"value": "[parameters('AzureSqlDatabase651_properties_groupId')]"
+					},
+					"AzureSqlDatabase651_properties_fqdns": {
+						"value": "[parameters('AzureSqlDatabase651_properties_fqdns')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ayjhadatafactory1_ArmTemplate_0')]"
+			]
+		}
+	]
+}
