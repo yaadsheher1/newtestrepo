@@ -1,0 +1,16 @@
+{
+	"name": "AzureSqlDatabase1forcx",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=ayjhasqlserver1.database.windows.net;initial catalog=master;user id=yaadsheher",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDgyNjY2NTI4LTAzNzUtNDZCMy05QURBLUM2MDVCMTY0NTY4RV8xYjA3YjE4Ni05YTE1LTRjYWQtOThlYS05NTBiZjQ3MjM4NmUiDQp9"
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime3",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
