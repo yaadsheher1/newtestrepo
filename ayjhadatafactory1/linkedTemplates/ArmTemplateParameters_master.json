@@ -5,10 +5,19 @@
 		"factoryName": {
 			"value": "ayjhadatafactory1"
 		},
+		"Azure DR Images Share_connectionString": {
+			"value": ""
+		},
+		"Azure Prod Images Share_connectionString": {
+			"value": ""
+		},
 		"AzureBlobStorage1_connectionString": {
 			"value": ""
 		},
 		"AzureBlobStorage2_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage3_connectionString": {
 			"value": ""
 		},
 		"AzureDataLakeStorage1_accountKey": {
@@ -17,7 +26,16 @@
 		"AzureDataLakeStorage2_accountKey": {
 			"value": ""
 		},
+		"AzureDataLakeStorage3forcx_accountKey": {
+			"value": ""
+		},
+		"AzureFileStorage1_connectionString": {
+			"value": ""
+		},
 		"AzureMySql1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase1forcx_connectionString": {
 			"value": ""
 		},
 		"OData1_password": {
@@ -39,6 +57,9 @@
 			"value": "https://cs1100320013877297e.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"value": "https://cs1100320013877297e.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3forcx_properties_typeProperties_url": {
 			"value": "https://cs1100320013877297e.dfs.core.windows.net/"
 		},
 		"OData1_properties_typeProperties_url": {

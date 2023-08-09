@@ -7,6 +7,14 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ayjhadatafactory1"
 		},
+		"Azure DR Images Share_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure DR Images Share'"
+		},
+		"Azure Prod Images Share_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure Prod Images Share'"
+		},
 		"AzureBlobStorage1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
@@ -14,6 +22,10 @@
 		"AzureBlobStorage2_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage2'"
+		},
+		"AzureBlobStorage3_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage3'"
 		},
 		"AzureDataLakeStorage1_accountKey": {
 			"type": "secureString",
@@ -23,9 +35,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2'"
 		},
+		"AzureDataLakeStorage3forcx_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage3forcx'"
+		},
+		"AzureFileStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureFileStorage1'"
+		},
 		"AzureMySql1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureMySql1'"
+		},
+		"AzureSqlDatabase1forcx_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1forcx'"
 		},
 		"OData1_password": {
 			"type": "secureString",
@@ -52,6 +76,10 @@
 			"defaultValue": "https://cs1100320013877297e.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://cs1100320013877297e.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3forcx_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://cs1100320013877297e.dfs.core.windows.net/"
 		},
@@ -136,11 +164,17 @@
 					"AzureBlobStorage2_connectionString": {
 						"value": "[parameters('AzureBlobStorage2_connectionString')]"
 					},
+					"AzureBlobStorage3_connectionString": {
+						"value": "[parameters('AzureBlobStorage3_connectionString')]"
+					},
 					"AzureDataLakeStorage1_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage1_accountKey')]"
 					},
 					"AzureDataLakeStorage2_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage2_accountKey')]"
+					},
+					"AzureFileStorage1_connectionString": {
+						"value": "[parameters('AzureFileStorage1_connectionString')]"
 					},
 					"OData1_password": {
 						"value": "[parameters('OData1_password')]"
@@ -193,11 +227,26 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDataLakeStorage3forcx_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage3forcx_accountKey')]"
+					},
 					"AzureMySql1_connectionString": {
 						"value": "[parameters('AzureMySql1_connectionString')]"
 					},
 					"testAzureSqlDatabase1_connectionString": {
 						"value": "[parameters('testAzureSqlDatabase1_connectionString')]"
+					},
+					"Azure DR Images Share_connectionString": {
+						"value": "[parameters('Azure DR Images Share_connectionString')]"
+					},
+					"Azure Prod Images Share_connectionString": {
+						"value": "[parameters('Azure Prod Images Share_connectionString')]"
+					},
+					"AzureSqlDatabase1forcx_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1forcx_connectionString')]"
+					},
+					"AzureDataLakeStorage3forcx_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage3forcx_properties_typeProperties_url')]"
 					},
 					"AzureKeyVault56_properties_privateLinkResourceId": {
 						"value": "[parameters('AzureKeyVault56_properties_privateLinkResourceId')]"
@@ -221,6 +270,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'ayjhadatafactory1_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "ayjhadatafactory1_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ayjhadatafactory1_ArmTemplate_1')]"
 			]
 		}
 	]

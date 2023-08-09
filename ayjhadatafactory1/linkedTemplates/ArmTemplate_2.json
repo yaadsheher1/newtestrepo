@@ -1,0 +1,251 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ayjhadatafactory1"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Vehicle API to SQL Server')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "RestTestAPI",
+								"type": "DatasetReference"
+							},
+							"name": "RestAPIResourceVehicles"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "Flatten1"
+						}
+					],
+					"script": "source(output(\n\t\tbody as (code as short, data as (current_page as boolean, data as (name as string, qr_code as string, uuid as string, vehicle_imei as long, vehicle_register_timestamp as integer)[], first_page_url as string, from as boolean, last_page as short, last_page_url as string, next_page_url as string, path as string, per_page as short, prev_page_url as string, to as short, total as short), message as string, status as string),\n\t\theaders as [string,string]\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\thttpMethod: 'GET',\n\ttimeout: 300,\n\trequestInterval: 0,\n\theaders: ['Authorization' -> 'Bearer 83f92d043ef74fc0a93d0016305c0c0bc6a1ede8735946f8b0dd1e6a4780e2ab'],\n\tpaginationRules: ['supportRFC5988' -> 'true', 'absoluteUrl' -> 'body.data.next_page_url'],\n\tresponseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> RestAPIResourceVehicles\nRestAPIResourceVehicles derive(Dataonly = body.data.data) ~> DerivedColumn1\nDerivedColumn1 foldDown(unroll(body.data.data),\n\tmapColumn(\n\t\tcode = body.code,\n\t\tcurrent_page = body.data.current_page,\n\t\tname = body.data.data.name,\n\t\tqr_code = body.data.data.qr_code,\n\t\tuuid = body.data.data.uuid,\n\t\tvehicle_imei = body.data.data.vehicle_imei,\n\t\tvehicle_register_timestamp = body.data.data.vehicle_register_timestamp,\n\t\tfirst_page_url = body.data.first_page_url,\n\t\tfrom = body.data.from,\n\t\tlast_page = body.data.last_page,\n\t\tlast_page_url = body.data.last_page_url,\n\t\tnext_page_url = body.data.next_page_url,\n\t\tpath = body.data.path,\n\t\tper_page = body.data.per_page,\n\t\tprev_page_url = body.data.prev_page_url,\n\t\tto = body.data.to,\n\t\ttotal = body.data.total,\n\t\tmessage = body.message,\n\t\tstatus = body.status\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tuuid as string,\n\t\tname as string,\n\t\tqr_code as string,\n\t\tvehicle_registered as integer,\n\t\tvehicle_imei as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Vehicle API to SQL Server')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Vehicle API to SQL Server",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "Vehicle API to SQL Server",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"RestAPIResourceVehicles": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2022-03-30T07:47:55Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/Vehicle API to SQL Server')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline5')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute Pipeline1",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [
+							{
+								"name": "ayushman",
+								"value": "1"
+							}
+						],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "pipeline4",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-06-23T19:28:24Z"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DR_Images')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure DR Images Share",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureFileStorageLocation"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Prod_Images')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Azure Prod Images Share",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureFileStorageLocation"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/prod-dr-file-sync-images')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy PROD Images to DR Images",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "1.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "/"
+							},
+							{
+								"name": "Destination",
+								"value": "/"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "AzureFileStorageReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureFileStorageWriteSettings",
+									"copyBehavior": "PreserveHierarchy"
+								}
+							},
+							"enableStaging": false,
+							"parallelCopies": 32
+						},
+						"inputs": [
+							{
+								"referenceName": "Prod_Images",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DR_Images",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-07-13T14:21:49Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Prod_Images')]",
+				"[concat(variables('factoryId'), '/datasets/DR_Images')]"
+			]
+		}
+	]
+}

@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ayjhadatafactory1"
 		},
+		"AzureDataLakeStorage3forcx_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage3forcx'"
+		},
 		"AzureMySql1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureMySql1'"
@@ -14,6 +18,22 @@
 		"testAzureSqlDatabase1_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'testAzureSqlDatabase1'"
+		},
+		"Azure DR Images Share_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure DR Images Share'"
+		},
+		"Azure Prod Images Share_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'Azure Prod Images Share'"
+		},
+		"AzureSqlDatabase1forcx_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureSqlDatabase1forcx'"
+		},
+		"AzureDataLakeStorage3forcx_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://cs1100320013877297e.dfs.core.windows.net/"
 		},
 		"AzureKeyVault56_properties_privateLinkResourceId": {
 			"type": "string",
@@ -48,6 +68,54 @@
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_npo')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "ayjhacontainer1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Excel1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
@@ -193,6 +261,27 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStorage3forcx')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStorage3forcx_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStorage3forcx_accountKey')]"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime4",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureMySql1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -222,6 +311,29 @@
 				"connectVia": {
 					"referenceName": "integrationRuntime2",
 					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 0
+						}
+					}
+				},
+				"managedVirtualNetwork": {
+					"type": "ManagedVirtualNetworkReference",
+					"referenceName": "default"
 				}
 			},
 			"dependsOn": []
@@ -502,128 +614,62 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Vehicle API to SQL Server')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
+			"name": "[concat(parameters('factoryName'), '/Azure DR Images Share')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "MappingDataFlow",
+				"annotations": [],
+				"type": "AzureFileStorage",
 				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "RestTestAPI",
-								"type": "DatasetReference"
-							},
-							"name": "RestAPIResourceVehicles"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTable1",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "DerivedColumn1"
-						},
-						{
-							"name": "Flatten1"
-						}
-					],
-					"script": "source(output(\n\t\tbody as (code as short, data as (current_page as boolean, data as (name as string, qr_code as string, uuid as string, vehicle_imei as long, vehicle_register_timestamp as integer)[], first_page_url as string, from as boolean, last_page as short, last_page_url as string, next_page_url as string, path as string, per_page as short, prev_page_url as string, to as short, total as short), message as string, status as string),\n\t\theaders as [string,string]\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\thttpMethod: 'GET',\n\ttimeout: 300,\n\trequestInterval: 0,\n\theaders: ['Authorization' -> 'Bearer 83f92d043ef74fc0a93d0016305c0c0bc6a1ede8735946f8b0dd1e6a4780e2ab'],\n\tpaginationRules: ['supportRFC5988' -> 'true', 'absoluteUrl' -> 'body.data.next_page_url'],\n\tresponseFormat: ['type' -> 'json', 'documentForm' -> 'documentPerLine']) ~> RestAPIResourceVehicles\nRestAPIResourceVehicles derive(Dataonly = body.data.data) ~> DerivedColumn1\nDerivedColumn1 foldDown(unroll(body.data.data),\n\tmapColumn(\n\t\tcode = body.code,\n\t\tcurrent_page = body.data.current_page,\n\t\tname = body.data.data.name,\n\t\tqr_code = body.data.data.qr_code,\n\t\tuuid = body.data.data.uuid,\n\t\tvehicle_imei = body.data.data.vehicle_imei,\n\t\tvehicle_register_timestamp = body.data.data.vehicle_register_timestamp,\n\t\tfirst_page_url = body.data.first_page_url,\n\t\tfrom = body.data.from,\n\t\tlast_page = body.data.last_page,\n\t\tlast_page_url = body.data.last_page_url,\n\t\tnext_page_url = body.data.next_page_url,\n\t\tpath = body.data.path,\n\t\tper_page = body.data.per_page,\n\t\tprev_page_url = body.data.prev_page_url,\n\t\tto = body.data.to,\n\t\ttotal = body.data.total,\n\t\tmessage = body.message,\n\t\tstatus = body.status\n\t),\n\tskipDuplicateMapInputs: false,\n\tskipDuplicateMapOutputs: false) ~> Flatten1\nFlatten1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tuuid as string,\n\t\tname as string,\n\t\tqr_code as string,\n\t\tvehicle_registered as integer,\n\t\tvehicle_imei as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> sink1"
+					"connectionString": "[parameters('Azure DR Images Share_connectionString')]",
+					"fileShare": "cs-v-ayjha-microsoft-com-100320013877297e"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime3",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/RestTestAPI')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime3')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Vehicle API to SQL Server')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/Azure Prod Images Share')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Vehicle API to SQL Server",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "1.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "Vehicle API to SQL Server",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"RestAPIResourceVehicles": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
 				"annotations": [],
-				"lastPublishTime": "2022-03-30T07:47:55Z"
+				"type": "AzureFileStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('Azure Prod Images Share_connectionString')]",
+					"fileShare": "cs-v-ayjha-microsoft-com-100320013877297e"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime3",
+					"type": "IntegrationRuntimeReference"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/Vehicle API to SQL Server')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime3')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline5')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1forcx')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "Execute Pipeline1",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [
-							{
-								"name": "ayushman",
-								"value": "1"
-							}
-						],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "pipeline4",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
 				"annotations": [],
-				"lastPublishTime": "2023-06-23T19:28:24Z"
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureSqlDatabase1forcx_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime3",
+					"type": "IntegrationRuntimeReference"
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline4')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime3')]"
 			]
 		}
 	]
