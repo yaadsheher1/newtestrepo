@@ -1,0 +1,17 @@
+{
+	"name": "Prod_Images",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Azure Prod Images Share",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureFileStorageLocation"
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
