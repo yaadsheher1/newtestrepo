@@ -2,7 +2,8 @@
 	"name": "ayjhadatafactory1",
 	"properties": {
 		"globalConfigurations": {
-			"CICDEnvironment": "test"
+			"CICDEnvironment": "test",
+			"PipelineBillingEnabled": "true"
 		}
 	},
 	"location": "eastus",
