@@ -26,6 +26,9 @@
 		"AzureDataLakeStorage2_accountKey": {
 			"value": ""
 		},
+		"AzureDataLakeStorage3_accountKey": {
+			"value": ""
+		},
 		"AzureDataLakeStorage3forcx_accountKey": {
 			"value": ""
 		},
@@ -58,6 +61,9 @@
 		},
 		"AzureDataLakeStorage2_properties_typeProperties_url": {
 			"value": "https://cs1100320013877297e.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"value": "https://adlsstoragetestt.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage3forcx_properties_typeProperties_url": {
 			"value": "https://cs1100320013877297e.dfs.core.windows.net/"

@@ -35,6 +35,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage2'"
 		},
+		"AzureDataLakeStorage3_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage3'"
+		},
 		"AzureDataLakeStorage3forcx_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorage3forcx'"
@@ -78,6 +82,10 @@
 		"AzureDataLakeStorage2_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://cs1100320013877297e.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage3_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://adlsstoragetestt.dfs.core.windows.net/"
 		},
 		"AzureDataLakeStorage3forcx_properties_typeProperties_url": {
 			"type": "string",
@@ -227,6 +235,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AzureDataLakeStorage3_accountKey": {
+						"value": "[parameters('AzureDataLakeStorage3_accountKey')]"
+					},
 					"AzureDataLakeStorage3forcx_accountKey": {
 						"value": "[parameters('AzureDataLakeStorage3forcx_accountKey')]"
 					},
@@ -242,8 +253,8 @@
 					"Azure Prod Images Share_connectionString": {
 						"value": "[parameters('Azure Prod Images Share_connectionString')]"
 					},
-					"AzureSqlDatabase1forcx_connectionString": {
-						"value": "[parameters('AzureSqlDatabase1forcx_connectionString')]"
+					"AzureDataLakeStorage3_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorage3_properties_typeProperties_url')]"
 					},
 					"AzureDataLakeStorage3forcx_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage3forcx_properties_typeProperties_url')]"
@@ -285,6 +296,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"AzureSqlDatabase1forcx_connectionString": {
+						"value": "[parameters('AzureSqlDatabase1forcx_connectionString')]"
 					}
 				}
 			},
